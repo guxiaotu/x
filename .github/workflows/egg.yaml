@@ -8,14 +8,35 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.14
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
       - name: Install dependencies
-        run: |
-          uv sync
+        run: uv sync
+
+      - name: Format code
+        run: uv run ruff format .
+
       - name: Run tests
-        run: |
-          uv run pytest
+        run: uv run pytest
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false            # 关键：只构建，不推送
+          tags: guxiaotu:x       # 本地标签，便于后续步骤引用
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
