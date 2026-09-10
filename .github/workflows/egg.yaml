@@ -29,6 +29,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -36,7 +39,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: false            # 关键：只构建，不推送
+          file: docker/Dockerfile
+          push: false          # 关键：只构建，不推送
           tags: guxiaotu:x       # 本地标签，便于后续步骤引用
           cache-from: type=gha
           cache-to: type=gha,mode=max
