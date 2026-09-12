@@ -163,3 +163,5 @@ docker/
 .github/
 .vscode/
 .gitignore
+
+#db.sqlite3
