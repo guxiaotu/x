@@ -12,11 +12,19 @@ COPY --from=ghcr.m.daocloud.io/astral-sh/uv:0.12.13 /uv /usr/local/bin/uv
 
 # download dependencies by use cache layer(exclude dev dependencies)
 COPY pyproject.toml uv.lock ./
-RUN uv sync --locked --no-install-project --no-dev
+
+# ---- uv / pip cache ----
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --locked --no-install-project --no-dev
 
 # copy source code(exclude dev dependencies)
 COPY . .
-RUN uv sync --locked --no-dev
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=cache,target=/root/.cache/pip \
+    uv sync --locked --no-dev
 
 # ---- build app ----
 FROM docker.m.daocloud.io/python:3.14-alpine
