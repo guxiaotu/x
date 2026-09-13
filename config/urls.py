@@ -22,7 +22,6 @@ from index import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-
-    # 注册路由,url为hello/
-    path("hello/", views.hello),
+    # 注册路由,url为index/
+    path("index/", views.index, name="index"),
 ]
