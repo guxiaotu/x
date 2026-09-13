@@ -18,6 +18,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from index import views
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+
+    # 注册路由,url为hello/
+    path("hello/", views.hello),
 ]

@@ -12,7 +12,7 @@ services:
     image: docker.1ms.run/mysql:8
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: python
+      MYSQL_ROOT_PASSWORD: Django123456
     volumes:
       - mysql:/var/lib/mysql
     ports:
