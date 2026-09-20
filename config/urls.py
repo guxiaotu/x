@@ -24,4 +24,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # 注册路由,url为index/
     path("index/", views.index, name="index"),
+    path("", views.index, name="index"),
 ]

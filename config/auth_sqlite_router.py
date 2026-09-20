@@ -24,15 +24,15 @@ class AuthSqliteRouter:
     def allow_relation(self, obj1, obj2, **hints):
         # 允许 auth 内部关系
         if (
-                obj1._meta.app_label in self.AUTH_APPS and
-                obj2._meta.app_label in self.AUTH_APPS
+            obj1._meta.app_label in self.AUTH_APPS
+            and obj2._meta.app_label in self.AUTH_APPS
         ):
             return True
 
         # 允许业务 app 内部关系
         if (
-                obj1._meta.app_label not in self.AUTH_APPS and
-                obj2._meta.app_label not in self.AUTH_APPS
+            obj1._meta.app_label not in self.AUTH_APPS
+            and obj2._meta.app_label not in self.AUTH_APPS
         ):
             return True
 
