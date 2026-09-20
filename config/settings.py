@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/6.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
-import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -75,11 +74,25 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 DATABASES = {
+
     "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "test",
+        "USER": "Django123456",
+        "PASSWORD": "Django123456",
+        "HOST": "localhost",
+        "PORT": "5432",
+    },
+    "sqlite": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "auth.sqlite3",
     }
+
 }
+
+DATABASE_ROUTERS = [
+    "config.auth_sqlite_router.AuthSqliteRouter",
+]
 
 
 # Password validation
@@ -104,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "zh-Hans"
 
 TIME_ZONE = "UTC"
 
